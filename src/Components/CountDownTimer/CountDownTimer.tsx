@@ -4,7 +4,7 @@ import ConfettiExplosion from 'react-confetti-explosion';
 import './CountDownTimer.css'
 
 
-const DEFAULT_TIME_IN_SEC = 3;
+const DEFAULT_TIME_IN_SEC = 300;
 const TIME_KEY = 'timeInSec';
 
 const CountDownTimer = () => {
