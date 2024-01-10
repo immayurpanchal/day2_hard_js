@@ -48,6 +48,7 @@ const CountDownTimer = () => {
     localStorage.setItem(TIME_KEY, JSON.stringify(DEFAULT_TIME_IN_SEC));
     setCurrentTime(DEFAULT_TIME_IN_SEC);
     setPaused(true)
+    setIsExploding(false);
   }
 
   return (
