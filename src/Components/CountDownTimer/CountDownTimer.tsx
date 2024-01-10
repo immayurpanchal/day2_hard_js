@@ -1,14 +1,16 @@
 import { Button } from 'antd';
 import { useEffect, useState } from 'react';
+import ConfettiExplosion from 'react-confetti-explosion';
 import './CountDownTimer.css'
 
 
-const DEFAULT_TIME_IN_SEC = 5;
+const DEFAULT_TIME_IN_SEC = 3;
 const TIME_KEY = 'timeInSec';
 
 const CountDownTimer = () => {
   const [currentTime, setCurrentTime] = useState<number>(+localStorage.getItem(TIME_KEY) || DEFAULT_TIME_IN_SEC);
   const [isPaused, setPaused] = useState(true);
+  const [isExploding, setIsExploding] = useState(false);
 
   useEffect(() => {
     const localStorageTime = localStorage.getItem(TIME_KEY)
@@ -29,6 +31,10 @@ const CountDownTimer = () => {
   }, [isPaused]);
 
   useEffect(() => {
+    if (!currentTime) {
+      setIsExploding(true)
+    }
+
     localStorage.setItem(TIME_KEY, JSON.stringify(currentTime))
     if (!currentTime) {
       setPaused(true);
@@ -38,8 +44,8 @@ const CountDownTimer = () => {
   const minutes = Math.floor(currentTime / 60);
   const seconds = currentTime % 60;
 
-  const onReset = () => { 
-    localStorage.setItem(TIME_KEY, JSON.stringify(DEFAULT_TIME_IN_SEC)); 
+  const onReset = () => {
+    localStorage.setItem(TIME_KEY, JSON.stringify(DEFAULT_TIME_IN_SEC));
     setCurrentTime(DEFAULT_TIME_IN_SEC);
     setPaused(true)
   }
@@ -66,6 +72,9 @@ const CountDownTimer = () => {
         <Button disabled={!currentTime} onClick={() => setPaused(true)}>Pause</Button>
         <Button danger type="primary" onClick={onReset}>Reset</Button>
       </div>
+      {isExploding && <ConfettiExplosion force={0.8} duration={3000}
+        particleCount={250}
+        width={1600} />}
     </div>
   );
 };
